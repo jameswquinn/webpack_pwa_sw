@@ -9,51 +9,79 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 */
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const WebpackPwaManifest = require("webpack-pwa-manifest");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
+const path = require("path");
 
 module.exports = {
   devServer: {
     historyApiFallback: true
   },
-  mode: 'production',
+  mode: "production",
   module: {
     rules: [
       {
         test: /\.js$/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: [
-              ['@babel/preset-env', {targets: {ie: '11'}}]
-            ],
-            plugins: ['@babel/plugin-syntax-dynamic-import']
+            presets: [["@babel/preset-env", { targets: { ie: "11" } }]]
+            //plugins: ['@babel/plugin-syntax-dynamic-import']
           }
         }
       }
     ]
   },
   plugins: [
-    new CopyWebpackPlugin([
-      'images/**',
-      'node_modules/@webcomponents/webcomponentsjs/**',
-      'manifest.json'
-    ]),
     new HtmlWebpackPlugin({
-      chunksSortMode: 'none',
-      template: 'index.html'
+      chunksSortMode: "none",
+      template: "index.html",
+      minify: {
+        removeAttributeQuotes: false,
+        collapseWhitespace: true,
+        removeComments: true
+      }
+    }),
+    new WebpackPwaManifest({
+      filename: "manifest.json",
+      orientation: "portrait",
+      display: "standalone",
+      start_url: "/",
+      crossorigin: null,
+      inject: true,
+      fingerprints: false,
+      ios: true,
+      publicPath: null,
+      includeDirectory: true,
+      name: "My Progressive Web App",
+      short_name: "MyPWA",
+      description: "My awesome Progressive Web App!",
+      background_color: "#ffffff",
+      theme_color: "#ff0000",
+      crossorigin: "use-credentials", //can be null, use-credentials or anonymous
+      icons: [
+        {
+          src: path.resolve("src/assets/icon.png"),
+          sizes: [48, 72, 96, 144, 192] // multiple sizes
+        },
+        {
+          src: path.resolve("src/assets/icon.png"),
+          size: "1024x1024" // you can also use the specifications pattern
+        }
+      ]
     }),
     new WorkboxWebpackPlugin.GenerateSW({
-      include: ['index.html', 'manifest.json', /\.js$/],
+      include: ["index.html", "manifest.json", /\.js$/],
       exclude: [/\/@webcomponents\/webcomponentsjs\//],
-      navigateFallback: 'index.html',
-      swDest: 'service-worker.js',
+      navigateFallback: "index.html",
+      swDest: "service-worker.js",
       clientsClaim: true,
       skipWaiting: true,
       runtimeCaching: [
         {
           urlPattern: /^https:\/\/fonts.gstatic.com\//,
-          handler: 'staleWhileRevalidate'
+          handler: "staleWhileRevalidate"
         }
       ]
     })

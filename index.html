@@ -45,14 +45,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta name="apple-mobile-web-app-title" content="My App">
 
     <!-- Homescreen icons -->
-    <link rel="apple-touch-icon" href="images/manifest/icon-48x48.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="images/manifest/icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="96x96" href="images/manifest/icon-96x96.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="images/manifest/icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="192x192" href="images/manifest/icon-192x192.png">
+    <link rel="apple-touch-icon" href="icon_48x48.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="icon_72x72.png">
+    <link rel="apple-touch-icon" sizes="96x96" href="icon_96x96.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="icon_144x144.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="icon_192x192.png">
 
     <!-- Tile icon for Windows 8 (144x144 + tile color) -->
-    <meta name="msapplication-TileImage" content="images/manifest/icon-144x144.png">
+    <meta name="msapplication-TileImage" content="icon_144x144.png">
     <meta name="msapplication-TileColor" content="#3f51b5">
     <meta name="msapplication-tap-highlight" content="no">
 
@@ -61,25 +61,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta name="twitter:site" content="@username">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="my-app">
-    <meta property="og:image" content="images/manifest/icon-144x144.png" />
+    <meta property="og:image" content="icon_144x144.png" />
 
     <!-- Performance tip: hint to the browser to start the handshake for the fonts site -->
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <script>
-      // Load and register pre-caching Service Worker
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-          navigator.serviceWorker.register('service-worker.js', {
-            scope: '/',
-          });
-        });
-      }
-
-      // Redux assumes `process.env.NODE_ENV` exists in the ES module build.
-      // https://github.com/reactjs/redux/issues/2907
-      window.process = { env: { NODE_ENV: 'production' } };
-    </script>
-
+   
     <!-- Add any global styles for body, document, etc. -->
     <style>
       @font-face {
@@ -104,12 +90,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
   </head>
   <body>
-    <my-app appTitle="my app"></my-app>
+    <h1>Hello</h1>
     <noscript>
       Please enable JavaScript to view this website.
     </noscript>
-    <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
-    <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-    <!-- Built with love using PWA Starter Kit -->
   </body>
 </html>
