@@ -8,6 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
+const CompressionPlugin = require("compression-webpack-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackPwaManifest = require("webpack-pwa-manifest");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -42,6 +43,9 @@ module.exports = {
         collapseWhitespace: true,
         removeComments: true
       }
+    }),
+    new CompressionPlugin({
+      algorithm: "gzip"
     }),
     new WebpackPwaManifest({
       filename: "manifest.json",
