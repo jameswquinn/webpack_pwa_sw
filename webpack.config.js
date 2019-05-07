@@ -8,6 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
+const WebpackBuildNotifierPlugin = require("webpack-build-notifier");
 const CompressionPlugin = require("compression-webpack-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackPwaManifest = require("webpack-pwa-manifest");
@@ -17,7 +18,14 @@ const path = require("path");
 
 module.exports = {
   devServer: {
-    historyApiFallback: true
+    contentBase: path.join(__dirname, "dist"),
+    compress: true,
+    port: 9000,
+    historyApiFallback: true,
+    overlay: {
+      warnings: true,
+      errors: true
+    }
   },
   mode: "production",
   module: {
@@ -27,8 +35,20 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: [["@babel/preset-env", { targets: { ie: "11" } }]]
-            //plugins: ['@babel/plugin-syntax-dynamic-import']
+            presets: [
+              [
+                "@babel/preset-env",
+                {
+                  targets: [
+                    "last 1 version",
+                    "> 1%",
+                    "maintained node versions",
+                    "not dead"
+                  ]
+                }
+              ]
+            ],
+            plugins: ['@babel/plugin-syntax-dynamic-import']
           }
         }
       }
@@ -88,6 +108,11 @@ module.exports = {
           handler: "staleWhileRevalidate"
         }
       ]
+    }),
+    new WebpackBuildNotifierPlugin({
+      title: "My Project Webpack Build",
+      logo: path.resolve("./static/cropped-favicon.png"),
+      suppressSuccess: true
     })
   ]
 };
