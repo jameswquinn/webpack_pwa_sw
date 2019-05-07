@@ -48,7 +48,7 @@ module.exports = {
                 }
               ]
             ],
-            plugins: ['@babel/plugin-syntax-dynamic-import']
+            plugins: ["@babel/plugin-syntax-dynamic-import"]
           }
         }
       }
@@ -96,8 +96,7 @@ module.exports = {
       ]
     }),
     new WorkboxWebpackPlugin.GenerateSW({
-      include: ["index.html", "manifest.json", /\.js$/],
-      exclude: [/\/@webcomponents\/webcomponentsjs\//],
+      include: ["index.html", "manifest.json", /\.js$/, /\.png$/],
       navigateFallback: "index.html",
       swDest: "service-worker.js",
       clientsClaim: true,
