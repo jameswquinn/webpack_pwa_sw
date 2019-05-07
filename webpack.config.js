@@ -110,7 +110,7 @@ module.exports = {
     }),
     new WebpackBuildNotifierPlugin({
       title: "My Project Webpack Build",
-      logo: path.resolve("./static/cropped-favicon.png"),
+      logo: path.resolve("static/cropped-favicon.png"),
       suppressSuccess: true
     })
   ]
